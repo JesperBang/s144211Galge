@@ -19,12 +19,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    FragmentTransaction ft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,76 +41,44 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ft = getSupportFragmentManager().beginTransaction();
+        // ViewPager for tab bar
+        final ViewPager vp = (ViewPager) findViewById(R.id.vp_pages);
+        PagerAdapter pa = new FragmentAdapter(getSupportFragmentManager());
+        vp.setAdapter(pa);
 
-        // Tab bar
-        ViewPager vp_pages= (ViewPager) findViewById(R.id.vp_pages);
-        PagerAdapter pagerAdapter=new FragmentAdapter(getSupportFragmentManager());
-        vp_pages.setAdapter(pagerAdapter);
+        //Starts the app on 2nd tab which also is the play screen.
+        //This is done so that the user only has to swipe once to get to either of the two other tabs.
+        vp.setCurrentItem(1);
 
-        TabLayout tbl_pages= (TabLayout) findViewById(R.id.tbl_pages);
-        tbl_pages.setupWithViewPager(vp_pages);
-        /*tbl_pages.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()){
-                    case 0:
-                        System.out.println("tab 0 clicked");
-                        Fragment frag = new HelpFragment();
-                        ft.replace(R.id.container_main, frag).addToBackStack(null).commit();
-                        //ft.replace(R.id.container_main, frag).commit();
-
-                    case 1:
-                        System.out.println("tab 1 clicked");
-                        break;
-                    case 2:
-                        System.out.println("tab 2 clicked");
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });*/
+        TabLayout TabL = (TabLayout) findViewById(R.id.tbl_pages);
+        TabL.setupWithViewPager(vp);
     }
 
-
+    //Class for tabs. Doing it this way when i only use 3 tabs is more beneficial.
+    //The fragments will be saved in the memory and therefore use more ram but
+    //the tabs will also not need to load since they are available at all times.
+    //The amount of ram the 3 fragments use is negligible compared the the performance boost.
     class FragmentAdapter extends FragmentPagerAdapter {
 
-        public FragmentAdapter(FragmentManager fm) {
-            super(fm);
-        }
+        public FragmentAdapter(FragmentManager fm) {super(fm);}
 
-        //Switch case to change fragment in container
+        //Return fragment to it's corresponding tab
         @Override
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                   ft.replace(R.id.container_main, new HelpFragment()).addToBackStack(null).commit();
+                    return new HelpFragment();
                 case 1:
                     return new PlayFragment();
-                   // ft.replace(R.id.container_main, new PlayFragment()).addToBackStack(null).commit();
                 case 2:
-                    System.out.println("Highscore");
                     return new HighscoreFragment();
-                    //ft.replace(R.id.container_main, new HighscoreFragment()).addToBackStack(null).commit();
             }
             return null;
         }
 
         //Count for static # of tabs in tab-bar
         @Override
-        public int getCount() {
-            return 3;
-        }
-
+        public int getCount() {return 3;}
 
         //Tab-bar titles and positions
         @Override

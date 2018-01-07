@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/appbar"
     tools:context="com.example.jespe.s144211galge.MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -45,6 +46,6 @@
 
     </FrameLayout>
 
-    <include layout="@layout/content_main" />
+
 
 </android.support.design.widget.CoordinatorLayout>
