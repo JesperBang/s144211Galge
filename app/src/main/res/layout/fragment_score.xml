@@ -2,13 +2,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
+    android:clickable="true"
     tools:context="com.example.jespe.s144211galge.ScoreFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+    <RelativeLayout
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/game_cont"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <nl.dionsegijn.konfetti.KonfettiView
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/confetti"/>
+
+        <ImageView
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/resultimg"
+            android:layout_width="179dp"
+            android:layout_height="157dp"
+            app:srcCompat="@drawable/llost" />
+
+        <TextView
+            android:layout_below="@+id/resultimg"
+            android:layout_marginTop="3dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/yourscoretext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your score:" />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/yourscoretext"
+            android:id="@+id/yourscore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"/>
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/yourscore"
+            android:layout_marginTop="15dp"
+            android:id="@+id/word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:visibility="gone"
+            android:layout_below="@+id/yourscore"
+            android:layout_marginBottom="15dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/UserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:text="User"
+            android:inputType="textPersonName" />
+
+        <Button
+            android:id="@+id/returnbtn"
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="5dp"
+            android:text="   Submit Score!   "
+            android:background="@color/subtop"
+            android:textColor="@color/highlight"/>
+    </RelativeLayout>
 </FrameLayout>

@@ -3,36 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.jespe.s144211galge.HighscoreFragment"
+    android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/white"
-    tools:showIn="@layout/app_bar_main"
-    android:layout_marginTop="?attr/actionBarSize">
+    android:clickable="true"
+    tools:context="com.example.jespe.s144211galge.PlayVsFragment">
 
     <RelativeLayout
         android:id="@+id/container_play"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:gravity="center_horizontal">
+        android:layout_marginTop="?attr/actionBarSize">
 
         <TextView
-            android:layout_marginTop="?attr/actionBarSize"
             android:layout_centerHorizontal="true"
-            android:id="@+id/TitleHL"
+            android:id="@+id/TitleVs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Highscore"
+            android:text="Choose a word"
             android:textSize="27sp" />
 
+        <ProgressBar
+            android:id="@+id/pb"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="107dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/TitleVs"
+            android:layout_marginLeft="8dp"
+            tools:layout_editor_absoluteY="254dp" />
+
         <ListView
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/TitleHL"
-            android:clickable="false"
-            android:id="@+id/lvhl"
+            android:layout_below="@id/TitleVs"
+            android:id="@+id/lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true" />
+
 
     </RelativeLayout>
 </FrameLayout>

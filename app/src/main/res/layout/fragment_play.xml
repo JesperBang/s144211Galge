@@ -33,21 +33,6 @@
             android:layout_height="168dp"
             app:srcCompat="@drawable/hangman" />
 
-        <TextView
-            android:layout_below="@id/imageView2"
-            android:layout_marginTop="20dp"
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="High Score:"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
-        <TextView
-            android:layout_below="@id/textView"
-            android:id="@+id/highscore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_height="wrap_content"
@@ -57,7 +42,6 @@
             <!-- Margin bottom to prevent accidental home press -->
 
             <Button
-                android:layout_below="@id/highscore"
                 android:id="@+id/Play"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"

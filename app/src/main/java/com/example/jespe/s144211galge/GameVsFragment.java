@@ -1,14 +1,10 @@
 package com.example.jespe.s144211galge;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,12 +22,12 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 
 
-public class GameFragment extends Fragment implements View.OnClickListener {
+public class GameVsFragment extends Fragment implements View.OnClickListener {
 
     FragmentTransaction ft;
     Fragment fm;
-    String wordunderscore = "", guess = "", guesslist = "", misslist = "", scoreNumber;
-    TextView wordfield, guessfield, missfield, score;
+    String wordunderscore = "", guess = "", guesslist = "", misslist = "", scoreNumber, chosenword;
+    TextView wordfield, guessfield, missfield, score, info;
     long tStart, tEnd, tDelta;
     double elapsedSeconds, temp1, temp2, temp3;
     ImageView hangmanimg;
@@ -43,25 +38,22 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     Boolean scoreBoolean;
     DecimalFormat twoDForm;
     Fragment frag;
+    Bundle bundle;
 
     //"importing" galgelogic into gameactivity
     Galgelogik spil = new Galgelogik();
 
-    @Override
     public View onCreateView(LayoutInflater i, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = i.inflate(R.layout.fragment_game, container, false);
+        View v = i.inflate(R.layout.fragment_game_vs, container, false);
 
         return v;
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        spil.nulstil();
-
         twoDForm= new DecimalFormat("#.##");
 
-        //Get more possible words if available.
-        new AsyncTaskRunner().execute();
+
 
         //Spinner and progressbar
         spinner = (ProgressBar) getView().findViewById(R.id.progressBar1);
@@ -74,6 +66,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         guessfield = (TextView) getView().findViewById(R.id.guessfield);
         missfield = (TextView) getView().findViewById(R.id.missfield);
         score = (TextView) getView().findViewById(R.id.score);
+        info = (TextView) getView().findViewById(R.id.infoText);
 
         //TextInput
         inputField = (EditText) getView().findViewById(R.id.inputField);
@@ -88,6 +81,10 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         imageArray[4] = R.drawable.forkert5;
         imageArray[5] = R.drawable.forkert6;
 
+        bundle = this.getArguments();
+
+        new GameVsFragment.AsyncTaskRunnerVsG().execute();
+
         //Handle Back button press ingame.
         //Returning til main menu
         getView().setOnKeyListener(new View.OnKeyListener() {
@@ -99,20 +96,33 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private class AsyncTaskRunner extends AsyncTask<String, String, String> {
+    private class AsyncTaskRunnerVsG extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
-            //Fetching words
-            getWordsFromDr();
+            //Delay so player1 can give player2 the phone without spending time
+            //which would affect the score.
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(String result) {
             //Removing loading/spinner...
+            //and info text.
             spinner.setVisibility(View.GONE);
+            info.setVisibility(View.GONE);
             inputField.setVisibility(View.VISIBLE);
+
+            //Start game with chosen word.
+            if (bundle != null) {
+                chosenword = bundle.getString("sendword", "error");
+            }
+            spil.vsNulstil(chosenword);
 
             //Setting word with underscores
             wordunderscore = spil.getSynligtOrd().replaceAll("\\*", "_ ");
@@ -135,17 +145,37 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         protected void onProgressUpdate(String... text) {      }
     }
 
-    //Grabbing words from dr.dk
-    public void getWordsFromDr(){
-        //Fixing policy for grabbing words from dr.dk
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+    @Override
+    public void onClick(View v) {
+        if (inputField.getText().length() != 1){
+            toasts("Please only guess one word at a time.");
+        }else {
 
-        //Trying to fecth words from dr.dk
-        try {
-            spil.hentOrdFraDr();
-        } catch (Exception e) {
-            e.printStackTrace();
+            guess = inputField.getText().toString();
+
+            //Checking if guessed word is correct and resetting field
+            if (spil.getBrugteBogstaver().contains(guess)) {
+                toasts("You already guessed that!");
+            } else {
+                //Submit guess to logic
+                spil.gætBogstav(guess);
+                inputField.setText("");
+
+                //Updating wordfield
+                System.out.println(spil.getSynligtOrd().replaceAll("\\*", "_").replaceAll(".(?!$)", "$0 ").toUpperCase());
+                wordfield.setText(spil.getSynligtOrd().replaceAll("\\*", "_").replaceAll(".(?!$)", "$0 ").toUpperCase());
+
+                //Updating guessed characters
+                updateTexts();
+            }
+        }
+
+        //Game Status
+        spil.logStatus();
+        if(spil.erSpilletTabt()){
+            result("loss");
+        }else if(spil.erSpilletVundet()){
+            result("win");
         }
     }
 
@@ -174,21 +204,21 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 while (scoreBoolean) {
                     //Updating score every 1000 ms.
                     try { Thread.sleep(1000); } catch (InterruptedException e) {e.printStackTrace();}
-                        handler.post(new Runnable(){
-                            public void run() {
-                                getScore();
+                    handler.post(new Runnable(){
+                        public void run() {
+                            getScore();
 
-                                //Formatting to get rid of a lot of decimals and updating textview
-                                scoreNumber = twoDForm.format(temp3);
-                                score.setText("Score: "+scoreNumber);
+                            //Formatting to get rid of a lot of decimals and updating textview
+                            scoreNumber = twoDForm.format(temp3);
+                            score.setText("Score: "+scoreNumber);
 
-                                //Fail safe to stop thread from working
-                                //after 500 seconds in case game isn't completed.
-                                //This will still be enough to lower score close to 0
-                                if (elapsedSeconds > 500){
-                                    scoreBoolean = false;
-                                }
-                    }});
+                            //Fail safe to stop thread from working
+                            //after 500 seconds in case game isn't completed.
+                            //This will still be enough to lower score close to 0
+                            if (elapsedSeconds > 500){
+                                scoreBoolean = false;
+                            }
+                        }});
                 }
             };
         };
@@ -243,42 +273,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         //Adding fragment to transaction and terminating GameFragment
         ft.add(R.id.con_play, frag, "ScoreScreen");
-        fm = getFragmentManager().findFragmentByTag("PlaySolo");
+        fm = getFragmentManager().findFragmentByTag("PlayVsScreen");
         if(fm!=null) ft.remove(fm);
         ft.commit();
     }
 
-    @Override
-    public void onClick(View v) {
-        if (inputField.getText().length() != 1){
-            toasts("Please only guess one word at a time.");
-        }else {
-
-            guess = inputField.getText().toString();
-
-            //Checking if guessed word is correct and resetting field
-            if (spil.getBrugteBogstaver().contains(guess)) {
-                toasts("You already guessed that!");
-            } else {
-                //Submit guess to logic
-                spil.gætBogstav(guess);
-                inputField.setText("");
-
-                //Updating wordfield
-                System.out.println(spil.getSynligtOrd().replaceAll("\\*", "_").replaceAll(".(?!$)", "$0 ").toUpperCase());
-                wordfield.setText(spil.getSynligtOrd().replaceAll("\\*", "_").replaceAll(".(?!$)", "$0 ").toUpperCase());
-
-                //Updating guessed characters
-                updateTexts();
-            }
-        }
-
-        //Game Status
-        spil.logStatus();
-        if(spil.erSpilletTabt()){
-            result("loss");
-        }else if(spil.erSpilletVundet()){
-            result("win");
-        }
-    }
 }

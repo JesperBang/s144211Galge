@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
 public class Galgelogik {
@@ -18,6 +19,7 @@ public class Galgelogik {
   private boolean sidsteBogstavVarKorrekt;
   private boolean spilletErVundet;
   private boolean spilletErTabt;
+  ArrayList<String> temp = new ArrayList<String>();
 
 
   public ArrayList<String> getBrugteBogstaver() {
@@ -52,6 +54,8 @@ public class Galgelogik {
     return spilletErTabt || spilletErVundet;
   }
 
+  public ArrayList<String> getMuligListOrd(){ return muligeOrd; }
+
 
   public Galgelogik() {
     muligeOrd.add("bil");
@@ -74,6 +78,14 @@ public class Galgelogik {
     opdaterSynligtOrd();
   }
 
+  public void vsNulstil(String word){
+    brugteBogstaver.clear();
+    antalForkerteBogstaver = 0;
+    spilletErVundet = false;
+    spilletErTabt = false;
+    ordet = word;
+    opdaterSynligtOrd();
+  }
 
   private void opdaterSynligtOrd() {
     synligtOrd = "";
@@ -135,6 +147,34 @@ public class Galgelogik {
     return sb.toString();
   }
 
+  //For chose word list....
+  public void hentMuligeOrdFraDr() throws Exception{
+    String data = hentUrl("https://dr.dk");
+    System.out.println("data = " + data);
+
+    data = data.substring(data.indexOf("<body")). // fjern headere
+            replaceAll("<.+?>", " ").toLowerCase(). // fjern tags
+            replaceAll("[^a-zæøå]", " "). // fjern tegn der ikke er bogstaver
+            replaceAll(" [a-zæøå] "," "). // fjern 1-bogstavsord
+            replaceAll(" [a-zæøå][a-zæøå] "," "); // fjern 2-bogstavsord
+
+    System.out.println("data = " + data);
+    muligeOrd.clear();
+    muligeOrd.addAll(new HashSet<String>(Arrays.asList(data.split(" "))));
+
+    ArrayList<String> temp = new ArrayList<String>();
+
+    for (int i = 0; i<10 ; i++ ){
+      String tempW = muligeOrd.get(new Random().nextInt(muligeOrd.size()));
+
+      //Sorterer ord der har mindre end 4 bogstaver fra for at få bedre ord.
+      if (tempW.length()<4){i--;}
+      else{temp.add(tempW);}
+    }
+
+    muligeOrd = temp;
+    System.out.println("mulige ord: "+temp);
+  }
 
   public void hentOrdFraDr() throws Exception {
     String data = hentUrl("https://dr.dk");

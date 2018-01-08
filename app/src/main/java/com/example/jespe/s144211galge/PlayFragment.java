@@ -1,9 +1,7 @@
 package com.example.jespe.s144211galge;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 
 public class PlayFragment extends Fragment implements View.OnClickListener {
 
-    TextView highscore;
     Button playbtn, playvsbtn;
     Fragment frag;
     FragmentTransaction ft;
@@ -31,22 +28,14 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        //Can't call getView() before after onCreateView
-        highscore = (TextView) getView().findViewById(R.id.highscore);
 
+        //Can't call getView() before after onCreateView
         playbtn = (Button) getView().findViewById(R.id.Play);
         playvsbtn = (Button) getView().findViewById(R.id.PlayVs);
 
         //Listeners
         playbtn.setOnClickListener(this);
         playvsbtn.setOnClickListener(this);
-
-        //Setting highscore on mainpage
-        SharedPreferences settings = this.getActivity().getSharedPreferences("game_data", Context.MODE_PRIVATE);
-        String highscorenum = settings.getString("high_score", null);
-
-        if (highscorenum == null){ highscore.setText("No highscore yet!"); }
-        else{ highscore.setText(highscorenum+" Seconds"); }
     }
 
     @Override
@@ -56,12 +45,14 @@ public class PlayFragment extends Fragment implements View.OnClickListener {
                 frag = new GameFragment();
                 ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.con_play, frag, "PlaySolo");
+                ft.addToBackStack("main");
                 ft.commit();
                 break;
             case R.id.PlayVs:
-                frag = new GameFragment();
+                frag = new PlayVsFragment();
                 ft = getFragmentManager().beginTransaction();
                 ft.add(R.id.con_play, frag, "PlayVs");
+                ft.addToBackStack("main");
                 ft.commit();
                 break;
         default:break;

@@ -3,11 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:visibility="visible"
-    android:layout_marginTop="?attr/actionBarSize"
     android:background="@color/white"
     android:clickable="true"
-    tools:context="com.example.jespe.s144211galge.GameFragment">
+    android:visibility="visible"
+    android:layout_marginTop="?attr/actionBarSize"
+    tools:context="com.example.jespe.s144211galge.GameVsFragment">
 
     <RelativeLayout
         android:layout_marginTop="?attr/actionBarSize"
@@ -104,7 +104,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Make a guess"
             android:inputType="textPersonName" />
 
         <ProgressBar
@@ -131,5 +130,15 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/inputField"
             android:text=" " />
+
+        <TextView
+
+            android:id="@+id/infoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/hangman"
+            android:layout_below="@+id/hangman"
+            android:text="Game starts within 3 seconds.\n Give player2 the phone" />
     </RelativeLayout>
+
 </FrameLayout>
