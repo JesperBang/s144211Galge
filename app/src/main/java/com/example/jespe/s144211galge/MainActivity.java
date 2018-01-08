@@ -25,6 +25,8 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    Menu nav_menu;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +34,25 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Burger menu
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        //Nav menu for setting nav menu items visible/invisible
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        nav_menu = navigationView.getMenu();
+
+        //TODO
+        nav_menu.findItem(R.id.nav_gallery).setVisible(false);
+        nav_menu.findItem(R.id.nav_send).setVisible(false);
+        nav_menu.findItem(R.id.nav_share).setVisible(true);
+        nav_menu.findItem(R.id.nav_camera).setVisible(false);
+
+
+        //Listener on nav
         navigationView.setNavigationItemSelectedListener(this);
 
         // ViewPager for tab bar
@@ -130,6 +144,8 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+
+        //TODO
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -143,6 +159,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

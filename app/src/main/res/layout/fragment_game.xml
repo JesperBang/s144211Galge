@@ -1,0 +1,125 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:visibility="visible"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:background="@color/white"
+    android:clickable="true"
+    tools:context="com.example.jespe.s144211galge.GameFragment">
+
+    <RelativeLayout
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/game_cont"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:id="@+id/hangman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/galge"/>
+
+        <LinearLayout
+            android:id="@+id/WordLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@id/hangman"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Word"
+                android:id="@+id/WordTV"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_marginLeft="30dp"
+                android:layout_weight="1"
+                android:id="@+id/wordfield"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/GuessLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/WordLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/GuessTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guess"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/guessfield"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/MissLayout"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/GuessLayout"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/MissesTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Misses"
+                android:textSize="17sp" />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_marginLeft="30dp"
+                android:id="@+id/missfield"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toRightOf="@+id/MissesTV" />
+        </LinearLayout>
+
+        <EditText
+            android:layout_below="@+id/MissLayout"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/inputField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <ProgressBar
+            android:layout_below="@+id/hangman"
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="107dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="39dp"
+            app:layout_constraintTop_toBottomOf="@+id/hangman"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/inputField"
+            android:layout_marginRight="8dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:layout_editor_absoluteY="254dp" />
+    </RelativeLayout>
+</FrameLayout>

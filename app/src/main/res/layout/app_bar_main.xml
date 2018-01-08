@@ -21,19 +21,19 @@
 
 
         <android.support.design.widget.TabLayout
+            android:id="@+id/tbl_pages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@color/bar"
-            app:tabSelectedTextColor="@color/highlight"
+            app:tabGravity="fill"
             app:tabIndicatorColor="@color/highlight"
             app:tabIndicatorHeight="3dp"
-            app:tabTextColor="#FFFFFF"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             app:tabMode="fixed"
-            app:tabGravity="fill"
-            android:id="@+id/tbl_pages"/>
+            app:tabSelectedTextColor="@color/highlight"
+            app:tabTextColor="#FFFFFF" />
 
     </android.support.design.widget.AppBarLayout>
-    <!-- <include layout="@layout/content_main" />-->
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -45,7 +45,4 @@
         </android.support.v4.view.ViewPager>
 
     </FrameLayout>
-
-
-
 </android.support.design.widget.CoordinatorLayout>

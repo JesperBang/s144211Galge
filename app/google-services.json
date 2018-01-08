@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "904987775838",
+    "firebase_url": "https://s144211galgeleg.firebaseio.com",
+    "project_id": "s144211galgeleg",
+    "storage_bucket": "s144211galgeleg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904987775838:android:20c2600224d2a4da",
+        "android_client_info": {
+          "package_name": "com.example.jespe.s144211galge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904987775838-04ktaadp1j9bnsnetffpl4kn6bd1inev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jespe.s144211galge",
+            "certificate_hash": "3cad603e73b1aee45845e951acf31014ce94979d"
+          }
+        },
+        {
+          "client_id": "904987775838-a0csqbuv18ljc6ckp6p0up0vkoln0lh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZ89t8Vtbo-v2_cI8EJ_Ba4h8Lq9qw_kY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904987775838-a0csqbuv18ljc6ckp6p0up0vkoln0lh4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
