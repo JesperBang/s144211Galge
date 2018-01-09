@@ -94,6 +94,7 @@ public class ScoreFragment extends Fragment implements View.OnClickListener {
             }
 
             //submit highscore
+            System.out.println("SAVE HIGH: "+uName.getText()+": "+highscorenum);
             if (resultin.contains("win")){Hs.saveHighScore(uName.getText()+": "+highscorenum, getActivity()); }
 
             //Close Score Fragment "returning" to tabbar fragments

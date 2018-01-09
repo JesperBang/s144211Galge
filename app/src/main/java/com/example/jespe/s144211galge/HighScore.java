@@ -15,6 +15,7 @@ HighscoreFragment hlf = new HighscoreFragment();
         SharedPreferences settings = activity.getSharedPreferences("game_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("temp", String.valueOf(Score));
+        System.out.println(String.valueOf(Score));
         editor.commit();
         sortHighScore(activity);
     }
@@ -23,17 +24,18 @@ HighscoreFragment hlf = new HighscoreFragment();
         SharedPreferences settings = activity.getSharedPreferences("game_data", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
 
-        String temp = settings.getString("temp", "None: 0");
-        Double dtemp = Double.parseDouble(temp.split(":")[1]);;
+            String temp = settings.getString("temp", "None: 0");
+            Double dtemp = Double.valueOf(temp.split(":")[1].replace(",","."));
 
-        String first = settings.getString("firstplace", "None: 0");
-        Double dfirst = Double.parseDouble(first.split(":")[1]);
+            String first = settings.getString("firstplace", "None: 0");
+            Double dfirst = Double.parseDouble(first.split(":")[1].replace(",","."));
 
-        String second = settings.getString("secondplace", "None: 0");
-        Double dsecond = Double.parseDouble(second.split(":")[1]);
+            String second = settings.getString("secondplace", "None: 0");
+            Double dsecond = Double.parseDouble(second.split(":")[1].replace(",","."));
 
-        String third = settings.getString("thirdplace", "None: 0");
-        Double dthird = Double.parseDouble(third.split(":")[1]);
+            String third = settings.getString("thirdplace", "None: 0");
+            Double dthird = Double.parseDouble(third.split(":")[1].replace(",","."));
+
 
         System.out.println(first+"  "+second+"  "+third);
 
@@ -64,5 +66,3 @@ HighscoreFragment hlf = new HighscoreFragment();
         al.add(2,third);
     }
 }
-
-

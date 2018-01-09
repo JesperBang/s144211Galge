@@ -72,8 +72,6 @@ public class PlayVsFragment extends Fragment {
             pb.setVisibility(View.GONE);
 
             lv.setAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, spil.getMuligListOrd()));
-
-
         }
 
         @Override

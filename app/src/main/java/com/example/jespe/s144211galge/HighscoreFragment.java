@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class HighscoreFragment extends Fragment {
 
@@ -55,6 +57,7 @@ public class HighscoreFragment extends Fragment {
     }
 
     public void resetScore(){
+        settings.edit().remove("temp").commit();
         settings.edit().remove("firstplace").commit();
         settings.edit().remove("secondplace").commit();
         settings.edit().remove("thirdplace").commit();

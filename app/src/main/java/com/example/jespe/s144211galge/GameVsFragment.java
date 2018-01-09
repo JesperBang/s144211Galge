@@ -53,8 +53,6 @@ public class GameVsFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         twoDForm= new DecimalFormat("#.##");
 
-
-
         //Spinner and progressbar
         spinner = (ProgressBar) getView().findViewById(R.id.progressBar1);
 
